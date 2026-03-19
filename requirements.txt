@@ -1,1 +1,2 @@
-# empty or add dependencies
+openai
+requests
