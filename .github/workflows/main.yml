@@ -46,7 +46,7 @@ jobs:
       # Fix Script Permission
       # =========================
       - name: 🔧 Set Script Permission
-        run: chmod +x scripts/log-analyser.sh
+        run: chmod +x scripts/log-analyser.py
 
       # =========================
       # Build Docker Image
