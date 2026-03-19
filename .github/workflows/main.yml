@@ -1,0 +1,62 @@
+name: 🚀 AI Log Analyzer Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+  log-analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+      # =========================
+      # Checkout Code
+      # =========================
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      # =========================
+      # Make Script Executable
+      # =========================
+      - name: 🔧 Set Script Permission
+        run: chmod +x script/log-analyzer.sh
+
+      # =========================
+      # Build Docker Image
+      # =========================
+      - name: 🐳 Build Docker Image
+        run: docker build -t myapp .
+
+      # =========================
+      # Run Container
+      # =========================
+      - name: 🚀 Run Container
+        run: |
+          docker run -d --name test-container myapp
+          sleep 5
+
+      # =========================
+      # Collect Logs
+      # =========================
+      - name: 📜 Collect Logs
+        run: |
+          docker logs test-container > app.log
+          echo "===== LOG OUTPUT ====="
+          cat app.log
+
+      # =========================
+      # Run Your Script
+      # =========================
+      - name: 🧠 Run Log Analyzer Script
+        env:
+          LOG_FILE: app.log
+        run: |
+          ./script/log-analyzer.sh
+
+      # =========================
+      # Cleanup
+      # =========================
+      - name: 🧹 Cleanup Container
+        if: always()
+        run: docker rm -f test-container
