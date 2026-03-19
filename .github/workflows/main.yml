@@ -77,7 +77,7 @@ jobs:
       - name: 🧠 Run Log Analyzer Script
         env:
           LOG_FILE: app.log
-        run: ./scripts/log-analyser.sh
+        run: ./scripts/log-analyser.py
 
       # =========================
       # Cleanup (Always Runs)
